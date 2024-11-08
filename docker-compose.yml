@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  flask-app:
+    build: .
+    ports:
+      - "5008:5000"  # Maps host port 5008 to container port 5000

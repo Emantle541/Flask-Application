@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Data Visualizer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        select, input, button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .chart-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stock Data Visualizer</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="symbol">Stock Symbol:</label>
+                <select name="symbol" required>
+                    {% for symbol in symbols %}
+                    <option value="{{ symbol }}">{{ symbol }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="chart_type">Chart Type:</label>
+                <select name="chart_type" required>
+                    <option value="line">Line</option>
+                    <option value="bar">Bar</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="start_date">Start Date:</label>
+                <input type="date" name="start_date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="end_date">End Date:</label>
+                <input type="date" name="end_date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="time_series_choice">Time Series:</label>
+                <select name="time_series_choice" required>
+                    <option value="1">Intraday</option>
+                    <option value="2">Daily</option>
+                    <option value="3">Weekly</option>
+                    <option value="4">Monthly</option>
+                </select>
+            </div>
+
+            <button type="submit">Generate Chart</button>
+        </form>
+
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+
+        {% if chart_file %}
+        <div class="chart-container">
+            <h2>Chart</h2>
+            <img src="{{ chart_file }}" alt="Stock Chart">
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
